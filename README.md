@@ -1,52 +1,62 @@
-# Kotlin Retrofit Example
+# Android Native API Network Layer & HTTP Client
 
-## Tech Stack:
-- **Programming Language:** Kotlin
-- **Networking Library:** Retrofit 2.9.0
-- **Dependency Management:** Gradle
+Este repositorio contiene un módulo especializado en desarrollo móvil nativo para **Android** utilizando **Kotlin**. El proyecto se centra en el diseño e implementación de una capa de red robusta para el consumo eficiente de servicios web externos mediante **Retrofit 2**, gestionando la deserialización automática de datos JSON y optimizando la concurrencia en hilos secundarios.
 
-## Description:
-This repository contains a sample application that demonstrates the use of Retrofit, a modern HTTP client for Android and Java applications, to make network requests in a clean and efficient manner.
+## 🚀 Características y Capacidades Técnicas
 
-## Usage:
+* **Consumo de APIs RESTful:** Configuración avanzada de un cliente HTTP con Retrofit para interactuar con los endpoints de la API de `[...]`.
+* **Manejo Asíncrono de Peticiones:** Implementación de flujos de trabajo asíncronos usando Corrutinas de Kotlin (Coroutines) con `suspend functions`.
+* **Parseo Automático de Datos:** Integración de conversores de datos como clases de datos nativas de Kotlin (`data class`).
+* **Arquitectura de Capas:** Aislamiento completo del cliente de red del resto de la interfaz gráfica, asegurando el principio de responsabilidad única.
 
-### Prerequisites:
-Before running this example, ensure you have the following installed on your system:
-- **Java Development Kit (JDK)**: Version 1.8 or higher.
-- **Gradle**: A build automation tool for managing dependencies and building projects.
-- **Android Studio** or a compatible IDE to run the Android app.
+## 🛠️ Stack Tecnológico
 
-### Building the Project:
+* **Lenguaje Principal:** Kotlin
+* **Plataforma:** Android SDK Nativo
+* **Cliente HTTP:** Retrofit 2
+* **Conversión de Datos:** Kotlinx Serialization.
+* **Gestión de Hilos:** Kotlin Coroutines.
 
-#### For Android App:
-To build and run this example as an Android application, follow these steps:
-1. Open your preferred IDE (e.g., Android Studio).
-2. Create a new project from scratch.
-3. Copy all files from `Kotlin-RetrofitExample_0-master` to the root directory of your new project.
-4. Ensure that you have Retrofit and any other dependencies properly configured in your `build.gradle` file.
+## ⚙️ Arquitectura de Red y Solución de Problemas
 
-#### For Desktop App:
-To build and run this example as a desktop application, follow these steps:
-1. Open your preferred IDE (e.g., IntelliJ IDEA).
-2. Create a new project from scratch.
-3. Copy all files from `Kotlin-RetrofitExample_0-master` to the root directory of your new project.
-4. Ensure that you have Retrofit and any other dependencies properly configured in your `build.gradle` file.
+El desarrollo de este cliente de red se diseñó resolviendo los desafíos estructurales de la conectividad móvil:
 
-### Running the Application:
+1. **Patrón Creacional (Singleton):** Se implementó una instancia única del cliente de Retrofit para evitar la recreación redundante de sockets de red y optimizar el consumo de memoria en el dispositivo.
+2. **Seguridad en la UI (UI Thread Safety):** Toda la lógica de petición y parseo de red se fuerza a ejecutarse fuera del hilo principal del sistema (*Main Thread*), garantizando que la interfaz del usuario permanezca fluida y libre de congelamientos o bloqueos (*ANR - Android Not Responding*).
+3. **Manejo de Errores Robustos:** Implementación de bloques de control para capturar fallos comunes de conectividad (dispositivo sin internet, tiempos de espera agotados o códigos de estado HTTP como `404` y `500`).
 
-#### For Android App:
-1. After building, navigate to the generated APK or AAB file within the build output folder.
-2. Install the application on an emulator or a physical device with Android SDK installed.
-3. The app should launch and display the Retrofit example interface.
+## 📌 Interfaces y Modelos de Código (Ejemplo)
 
-#### For Desktop App:
-1. After building, you can run the executable JAR file using your IDE's built-in runner.
-2. The application will start and open in your default web browser.
+El núcleo de la comunicación se define mediante la abstracción de interfaces claras:
 
-## Contributing:
+```kotlin
+interface ApiService {
+    @GET("endpoint_del_proyecto")
+    suspend fun fetchData(): Response<List<YourDataModel>>
+}
+````
+🔧 Configuración e Instalación Local
 
-Contributions are welcome! If you find any issues or have suggestions for improvements, please submit a pull request or create an issue on this repository.
+Para inspeccionar el flujo de red o compilar el proyecto en Android Studio, sigue estos pasos:
 
----
+    Clonar el repositorio:
 
-This README provides a comprehensive guide to setting up and running the Kotlin Retrofit Example project. For detailed documentation and further assistance, refer to the official Retrofit and Gradle documentation.
+  Bash
+  git clone [https://github.com/longaresf/android-api-network-layer.git](https://github.com/longaresf/android-api-network-layer.git)
+
+2. Abrir en Android Studio:
+
+    Selecciona File > Open y elige el directorio clonado.
+
+3. Sincronizar Gradle:
+
+    Permite que el sistema descargue las dependencias de Retrofit especificadas en el archivo build.gradle (Module: app).
+
+4. Ejecución:
+
+    Corre la aplicación en un dispositivo físico con depuración USB activa o en un emulador con acceso a internet.
+
+✒️ Autor
+
+    Francisco Longares - Desarrollador Mobile Android - longaresf
+
